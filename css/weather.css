@@ -5,19 +5,20 @@
 
 #mhover {
     position: absolute;
-    background-color: #161616;
+    /* background-color: #161616; */
     margin: 0;
     /* padding: 2px; */
     width: 8%;
     left: 5px;
     top: 70px;
-    border: solid;
+    border: 1px solid;
     text-align: center;
     font-family: 微软雅黑;
     font-size: 15px;
     border-color: beige;
     border-radius: 25px;
     color: beige;
+    cursor: default;
 }
 
 #content {
