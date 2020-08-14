@@ -1,24 +1,8 @@
 /*
  * @Author: Charon
  * @Date: 2020-08-02 15:42:44
- * @LastEditTime: 2020-08-02 22:17:28
+ * @LastEditTime: 2020-08-14 18:08:52
  */
-(function () {
-    var btn = document.getElementById('mhover');
-    var box = document.getElementById('content');
-    var timer = null;
-    box.onmouseover = btn.onmouseover = function () {
-        if (timer) clearTimeout(timer)
-        box.style.display = 'block';
-    }
-    box.onmouseout = btn.onmouseout = function () {
-        timer = setTimeout(function () {
-            box.style.display = 'none';
-        }, 400);
-
-    }
-})();
-
 var mode = document.getElementById("mode")
 var flag = true
 var bg = document.getElementsByTagName("body")[0]
@@ -99,6 +83,7 @@ function toNight() {
     bg.style.backgroundSize = "100%"
     bg.style.color = "beige"
     document.getElementById("time").style.color = "beige"
+    document.getElementById("search-content").style.color = "beige"
     mode.src = "img/icons8-太阳-24.png"
     mode.title = "点击切换至日间模式"
 }
@@ -107,6 +92,7 @@ function toDay() {
     bg.style.backgroundSize = "100%"
     bg.style.color = "black"
     document.getElementById("time").style.color = "black"
+    document.getElementById("search-content").style.color = "black"
     mode.src = "img/icons8-新月-50.png"
     mode.title = "点击切换至夜间模式"
 }

@@ -1,7 +1,7 @@
 <!--
  * @Author: Charon
  * @Date: 2020-08-01 09:06:09
- * @LastEditTime: 2020-08-02 21:36:27
+ * @LastEditTime: 2020-08-14 19:35:24
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
             </ul>
         </div>
         <form action="https://cn.bing.com/search" method="get" id="search" target="_blank">
-            <input type="text" name="q" value="" placeholder="bing搜索" id="search-content">
+            <input type="text" name="q" value="" placeholder="bing搜索" id="search-content" style="color: beige;font-size: 15px;">
             <button type="submit" id="search-btn"><img src="img/icons8-搜索-64white.png" alt="" height="25px"></button>
         </form>
     </div>
@@ -36,7 +36,7 @@
     <div id="date" style="position: absolute; top: 5%;color: beige;"></div>
     <div id="time"></div>
     <!-- 模式切换按钮 -->
-    <img src="img/icons8-太阳-24.png" alt="" title="点击切换至夜间模式" id="mode">
+    <img src="img/icons8-太阳-24.png" alt="" title="点击切换至日间模式" id="mode">
     <!-- 其他模块显示隐藏按钮 -->
     <img src="img/icons8-隐藏-50white.png" id="change-button" alt=""
         style="width: 30px; position: absolute; top: 53%; right: 5%; cursor: pointer;">
@@ -64,52 +64,8 @@
             </div>
         </div>
     </div>
-    <!--  天气， Created by Yu Jiahuan-->
-    <div id="mhover">
-        悬停以查看天气
-        <div id="content"
-            style="width: 100%; color: #FFFFFF;margin: 5px;padding: 10px;background-image: linear-gradient(#484848,#9e9e9e);box-shadow: 15px 15px 10px #555555">
-            <!-- <img src="img/YDT08674.jpg" width="100%" height="100%" id="BGP"> -->
-            <h3
-                style="background-color: #000000;align-items: center;width: 100%;height: 30%;margin: 5px;padding: 10px;box-shadow: 10px 10px 10px  #555555">
-                天气</h3>
-            <ul id="box">
-            </ul>
-
-
-            <ul id="hours"
-                style="background-color: #6495ED;padding: 10px;background-image: linear-gradient(#484848,#9e9e9e);box-shadow: 15px 15px 10px  #555555">
-                <ul>
-                    <!-- /* 替换晴天 阴天 雨天 图片 置于底层 */ -->
-                </ul>
-                <h3
-                    style="background-color: #000000; left: 50px; padding: 10px;height: 10%;box-shadow: 10px 10px 5px #555555">
-                    小时天气</h3>
-            </ul>
-            <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-            <script>
-                $.ajax({
-                    type: 'GET',
-                    url: 'https://www.tianqiapi.com/api/',
-                    data: 'version=v1&city=成都&appid=23035354&appsecret=8YvlPNrz',
-                    dataType: 'JSON',
-                    error: function () {
-                        alert('网络错误，请重试');
-                    },
-                    success: function (r) {
-                        $('#box').append('<li>城市: ' + r.city + '</li>');
-                        $('#box').append('<li>天气: ' + r.data[0].wea + '</li>');
-                        $('#box').append('<li>提示: ' + r.data[0].air_tips + '</li>');
-                        // 遍历数组
-                        for (var i = 0; i < r.data[0].hours.length; i++) {
-                            $('#hours').append('<li>' + ' 时间: ' + r.data[0].hours[i].day + ' 气温: ' + r.data[0].hours[i].tem +
-                                ' </li >');
-                        }
-                    }
-                });
-            </script>
-        </div>
-    </div>
+     <!-- 天气 -->
+     <iframe frameborder="0" scrolling="no" hspace="0" src="https://i.tianqi.com/?c=code&a=getcode&id=26&color=%23FFFFFF&h=60&w=610"></iframe>
 </body>
 <script src="js/jquery-2.1.0 copy.js"></script>
 <script src="js/index.js"></script>
