@@ -1,7 +1,7 @@
 <!--
  * @Author: Charon
- * @Date: 2020-08-07 19:25:50
- * @LastEditTime: 2020-08-07 19:53:11
+ * @Date: 2020-08-01 09:06:09
+ * @LastEditTime: 2020-08-02 09:26:48
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -9,14 +9,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test</title>
+    <title>MyProject</title>
+    <link rel="stylesheet" href="css/weather.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            color: beige;
+            background: url(img/wallhaven-2em38y.jpg);
+            background-size: 100%;
+        }
+
+        .search-box {
+            position: absolute;
+            width: 40%;
+            height: 80px;
+            top: 25%;
+            left: 30%;
+
+        }
+
+        .search-engine {
+            position: absolute;
+            width: 100%;
+            left: 15%;
+        }
+
+        .engine-list {
+            position: absolute;
+            list-style: none;
+            width: 100%;
+        }
+
+        .engine-list li {
+            float: left;
+            margin-left: 25px;
+        }
+
+        .engine-list li:hover {
+            font-size: larger;
+            cursor: pointer;
+        }
+
+        #search {
+            position: absolute;
+            width: 80%;
+            height: 35px;
+            border: 1px rgb(189, 189, 189) solid;
+            border-radius: 50px;
+            left: 10%;
+            bottom: 10%;
+        }
+
+        #search-content {
+            position: absolute;
+            left: 5%;
+            top: 10%;
+            border: none;
+            height: 25px;
+            font-size: 20px;
+            outline: none;
+            background: none;
+        }
+
+        #search-btn {
+            position: absolute;
+            top: 8%;
+            right: 1%;
+            background: none;
+            border: none;
+            height: 25px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        #time {
+            position: absolute;
+            font-family: sans-serif;
+            color: beige;
+            font-size: 60px;
+            top: 10%;
+            left: 42%;
+        }
+
+        #mode {
+            position: absolute;
+            width: 2%;
+            right: 3%;
+            top: 5%;
+            cursor: pointer;
+
+        }
+
+        .parter {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            border-radius: 30px;
+            border: 1px solid whitesmoke;
+            display: none;
+        }
+
+        .parter1 {
+            left: 4%;
+            top: 60%;
+        }
+
+        .parter2 {
+            left: 28%;
+            top: 60%;
+        }
+
+        .parter3 {
+            left: 52%;
+            top: 60%;
+        }
+
+        .parter4 {
+            right: 4%;
+            top: 60%;
+        }
+    </style>
 </head>
 
 <body>
-    Hello world!
-    <div id="nav">
+    <!-- 搜索框 -->
+    <div class="search-box">
+        <div class="search-engine">
+            <ul class="engine-list">
+                <li class="el">百度</li>
+                <li class="el">Google</li>
+                <li class="el">Bing</li>
+                <li class="el">360</li>
+                <li class="el">知乎</li>
+                <li class="el">站内</li>
+            </ul>
+        </div>
+        <form action="https://cn.bing.com/search" method="get" id="search" target="_blank">
+            <input type="text" name="q" value="" placeholder="bing搜索" id="search-content">
+            <button type="submit" id="search-btn"><img src="img/icons8-搜索-64white.png" alt="" height="25px"></button>
+        </form>
+    </div>
+    <!-- 时间 -->
+    <div id="date" style="position: absolute; top: 5%;"></div>
+    <div id="time"></div>
+    <!-- 模式切换按钮 -->
+    <img src="img/icons8-太阳-24.png" alt="" title="点击切换至夜间模式" id="mode">
+    <!-- 其他模块显示隐藏按钮 -->
+    <img src="img/icons8-隐藏-50white.png" id="change-button" alt=""
+        style="width: 40px; position: absolute; top: 53%; right: 5%; cursor: pointer;">
+    <!-- 其他模块 -->
+    <div class="parter parter1" id="parter1"></div>
+    <div class="parter parter2" id="parter2"></div>
+    <div class="parter parter3" id="parter3"></div>
+    <div class="parter parter4" id="parter4"></div>
+    <!-- 动态可交互得背景设计 -->
+    <canvas id="canvas"></canvas>
 
+    <!--  天气， Created by Yu -->
+    <div id="mhover">
+        悬停以查看天气
+        <div id="content"
+            style="width: 100%; color: #FFFFFF;margin: 5px;padding: 10px;background-image: linear-gradient(#484848,#9e9e9e);box-shadow: 15px 15px 10px #555555">
+            <!-- <img src="img/YDT08674.jpg" width="100%" height="100%" id="BGP"> -->
+            <h3
+                style="background-color: #000000;align-items: center;width: 100%;height: 30%;margin: 5px;padding: 10px;box-shadow: 10px 10px 10px  #555555">
+                天气</h3>
+            <ul id="box">
+            </ul>
+
+
+            <ul id="hours"
+                style="background-color: #6495ED;padding: 10px;background-image: linear-gradient(#484848,#9e9e9e);box-shadow: 15px 15px 10px  #555555">
+                <ul>
+                    <!-- /* 替换晴天 阴天 雨天 图片 置于底层 */ -->
+                </ul>
+                <h3
+                    style="background-color: #000000; left: 50px; padding: 10px;height: 10%;box-shadow: 10px 10px 5px #555555">
+                    小时天气</h3>
+            </ul>
+            <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+            <script>
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://www.tianqiapi.com/api/',
+                    data: 'version=v1&city=成都&appid=23035354&appsecret=8YvlPNrz',
+                    dataType: 'JSON',
+                    error: function () {
+                        alert('网络错误，请重试');
+                    },
+                    success: function (r) {
+                        $('#box').append('<li>城市: ' + r.city + '</li>');
+                        $('#box').append('<li>天气: ' + r.data[0].wea + '</li>');
+                        $('#box').append('<li>提示: ' + r.data[0].air_tips + '</li>');
+                        // 遍历数组
+                        for (var i = 0; i < r.data[0].hours.length; i++) {
+                            $('#hours').append('<li>' + ' 时间: ' + r.data[0].hours[i].day + ' 气温: ' + r.data[0].hours[i].tem +
+                                ' </li >');
+                        }
+                    }
+                });
+            </script>
+        </div>
     </div>
 </body>
+<script src="js/jquery-2.1.0 copy.js"></script>
+<script>
+    (function () {
+        var btn = document.getElementById('mhover');
+        var box = document.getElementById('content');
+        var timer = null;
+        box.onmouseover = btn.onmouseover = function () {
+            if (timer) clearTimeout(timer)
+            box.style.display = 'block';
+        }
+        box.onmouseout = btn.onmouseout = function () {
+            timer = setTimeout(function () {
+                box.style.display = 'none';
+            }, 400);
+
+        }
+    })();
+
+    var mode = document.getElementById("mode")
+    var flag = true
+    var bg = document.getElementsByTagName("body")[0]
+    // 设计日期显示
+    function showDate() {
+        var date = new Date
+        var year = date.getFullYear()
+        var month = date.getMonth() + 1
+        var day = date.getDate()
+        var week = "日一二三四五六".charAt(date.getDay())
+        var date_element = document.getElementById("date")
+        date_element.innerHTML = year + "年" + month + "月" + day + "日 " + " 星期" + week
+    }
+    // 设计时间显示
+    function showTime() {
+        var t = new Date
+        var hour = t.getHours()
+        var minute = t.getMinutes()
+        var second = t.getSeconds()
+        if (second < 10) {
+            second = "0" + second
+        }
+        if (minute < 10) {
+            minute = "0" + minute
+        }
+        if (hour < 10) {
+            hour = "0" + hour
+        }
+        var time_element = document.getElementById("time")
+        time_element.innerHTML = hour + ":" + minute + ":" + second
+        // 根据时间自动切换日夜间模式
+        if (hour == 19 && minute == "00" && second == "00") {
+            toNight()
+        }
+        if (hour == "06" && minute == "00" && second == "00") {
+            toDay()
+        }
+    }
+    showDate()
+    setInterval("showTime()", 1000)
+    // 切换搜索引擎
+    var el_btn = document.getElementsByClassName("el")
+    var search = document.getElementById("search")
+    var search_content = document.getElementById("search-content")
+    el_btn[0].onclick = function () {
+        search.action = "https://www.baidu.com/s"
+        search_content.name = "wd"
+        search_content.placeholder = "百度一下，你就知道"
+    }
+    el_btn[1].onclick = function () {
+        search.action = "https://www.google.com/search"
+        search_content.name = "q"
+        search_content.placeholder = "Google"
+    }
+    el_btn[2].onclick = function () {
+        search.action = "https://cn.bing.com/search"
+        search_content.name = "q"
+        search_content.placeholder = "Bing搜索"
+    }
+    el_btn[3].onclick = function () {
+        search.action = "https://www.so.com/s"
+        search_content.name = "q"
+        search_content.placeholder = "360搜索"
+    }
+    el_btn[4].onclick = function () {
+        search.action = "https://www.zhihu.com/search"
+        search_content.name = "q"
+        search_content.placeholder = "知乎搜索"
+    }
+    // 点击实现日间模式切换
+    function toNight() {
+        bg.style.background = "url(img/wallhaven-2em38y.jpg)"
+        bg.style.backgroundSize = "100%"
+        bg.style.color = "beige"
+        document.getElementById("time").style.color = "beige"
+        mode.src = "img/icons8-太阳-24.png"
+        mode.title = "点击切换至日间模式"
+    }
+    function toDay() {
+        bg.style.background = "url(img/bg_white.jpg)"
+        bg.style.backgroundSize = "100%"
+        bg.style.color = "black"
+        document.getElementById("time").style.color = "black"
+        mode.src = "img/icons8-新月-50.png"
+        mode.title = "点击切换至夜间模式"
+    }
+    mode.onclick = function () {
+        if (flag) {
+            toDay()
+            flag = false
+        } else {
+            toNight()
+            flag = true
+        }
+    }
+    var change_button = document.getElementById("change-button")
+    var parter = document.getElementsByClassName("parter")
+    var display_flag = false
+    change_button.onclick = function () {
+        if (!display_flag) {
+            change_button.src = "img/icons8-可见-64white.png"
+            // 渐进渐出
+            $("#parter4").fadeIn(200, function () {
+                $("#parter3").fadeIn(200, function () {
+                    $("#parter2").fadeIn(200, function () {
+                        $("#parter1").fadeIn(200)
+                    })
+                })
+            })
+            display_flag = true
+        } else {
+            change_button.src = "img/icons8-隐藏-50white.png"
+            parter[0].style.display = "block"
+            parter[1].style.display = "block"
+            parter[2].style.display = "block"
+            parter[3].style.display = "block"
+            display_flag = false
+        }
+
+    }
+
+</script>
 
 </html>
